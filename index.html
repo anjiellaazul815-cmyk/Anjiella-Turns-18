@@ -250,9 +250,9 @@
         <section id="about" class="bloom-on-scroll glass rounded-3xl p-8 sm:p-12 border-2 border-gold-300/40 relative overflow-hidden shadow-xl bg-gradient-to-br from-white via-cream to-gold-100/10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- 10 slide Carousel Frame with Premium Vertical Rectangle Frame -->
+                <!-- 10 slide Carousel Frame with Premium Vertical Rectangle Frame (Enlarged) -->
                 <div class="lg:col-span-5 flex flex-col items-center">
-                    <div class="relative p-6 max-w-sm w-full transition transform duration-300 hover:scale-[1.01]">
+                    <div class="relative p-6 max-w-[420px] w-full transition transform duration-300 hover:scale-[1.01]">
                         
                         <!-- Vintage Delicate Double-Line Rectangular Portrait Frame -->
                         <div class="absolute inset-0 pointer-events-none z-20">
@@ -941,6 +941,7 @@
             document.getElementById('qr-modal').classList.add('hidden');
         }
 
+        // Processing high quality 1080p images dynamically
         function compressAndProcessFile(file, maxDim, quality, callback) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -991,12 +992,13 @@
             const file = event.target.files[0];
             if (!file) return;
 
-            compressAndProcessFile(file, 400, 0.5, (base64) => {
+            // Updated processing parameters: 1080px boundaries at 85% high visual density output
+            compressAndProcessFile(file, 1080, 0.85, (base64) => {
                 selectedImageBase64 = base64;
                 document.getElementById('upload-placeholder').classList.add('hidden');
                 document.getElementById('upload-preview-container').classList.remove('hidden');
                 document.getElementById('upload-preview').src = base64;
-                showToast("📸 Photo processed successfully!");
+                showToast("📸 High quality photo processed successfully!");
             });
         }
 
