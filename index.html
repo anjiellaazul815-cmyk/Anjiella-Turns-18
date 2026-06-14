@@ -285,7 +285,7 @@
                             </svg>
                         </div>
 
-                        <!-- Main Slideshow Viewport (Vertical Rectangle - perfect vertical elegance) -->
+                        <!-- Main Slideshow Viewport (Vertical Rectangle) -->
                         <div class="overflow-hidden bg-cream relative group aspect-[2/3] rounded-xl border-b-4 border-gold-400 shadow-xl" id="profileCarousel">
                             
                             <!-- Slide Elements bound with self-healing parameters -->
@@ -783,13 +783,14 @@
         const DEFAULT_PASSCODE = "rosebud";
         // =========================================================================
 
+        // POPULATED CONFIGURATION WITH YOUR PROVIDED KEYS:
         const firebaseConfig = {
-            apiKey: "",
-            authDomain: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
+            apiKey: "AIzaSyC6iV8Osi3I7nnCKD-jfMEQ9ESkXt9yQWE",
+            authDomain: "anjiella-turns-18.firebaseapp.com",
+            projectId: "anjiella-turns-18",
+            storageBucket: "anjiella-turns-18.firebasestorage.app",
+            messagingSenderId: "9587364068",
+            appId: "1:9587364068:web:37429a3d500163ab485cf1"
         };
 
         const isFirebaseActive = !!(firebaseConfig && firebaseConfig.apiKey);
@@ -1682,17 +1683,21 @@
         async function retrieveAndLoadSavedAudio() {
             try {
                 const file = await getAudioFile();
+                const audioEl = document.getElementById('garden-bg-audio');
+                if (!audioEl) return;
+
+                // Self-Healing Audio Fallback: If relative file is missing (404),
+                // play a beautiful backup online piano track automatically.
+                audioEl.addEventListener('error', function handleAudioError() {
+                    console.warn("Relative MP3 file not found on host. Loading backup piano track...");
+                    audioEl.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+                }, { once: true });
+
                 if (file) {
                     const blobUrl = URL.createObjectURL(file);
-                    const audioEl = document.getElementById('garden-bg-audio');
-                    if (audioEl) {
-                        audioEl.src = blobUrl;
-                    }
+                    audioEl.src = blobUrl;
                 } else {
-                    const audioEl = document.getElementById('garden-bg-audio');
-                    if (audioEl) {
-                        audioEl.src = "Barbie%20-%2012%20Dancing%20Princesses%20(Theme)%20%5BAudio%5D%20_%20Barbie%20in%20the%2012%20Dancing%20Princesses(MP3_160K).mp3";
-                    }
+                    audioEl.src = "Barbie%20-%2012%20Dancing%20Princesses%20(Theme)%20%5BAudio%5D%20_%20Barbie%20in%20the%2012%20Dancing%20Princesses(MP3_160K).mp3";
                 }
             } catch (err) {
                 console.warn("Could not retrieve saved background track.", err);
