@@ -20,7 +20,7 @@
     console.log("🌸 Firebase Connected Successfully!");
     
     // Test the listener
-    const colRef = collection(db, "artifacts", "anjiella-debut-vault", "letters");
+  const colRef = collection(db, "letters");
     onSnapshot(colRef, (snapshot) => {
       console.log("Database checked! Total letters found:", snapshot.size);
     }, (err) => {
